@@ -1,12 +1,21 @@
 //password = ZZGgurzj9lRYWULy
-const express = require("express");
-const mongoose = require("mongoose");
-const router = require("./Routes/UserRoutes");
-const multer = require('multer');
-const path = require('path');
+
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import router from "./Routes/UserRoutes.js";
+import multer from "multer";
+import path, { dirname, join } from "path";
+import { fileURLToPath } from "url";
+import cors from "cors";
+
+
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
-const cors = require("cors");
 
 // Middleware
 app.use(express.json());
@@ -14,16 +23,12 @@ app.use(cors());
 app.use("/users", router); 
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://admin:ZZGgurzj9lRYWULy@cluster0.o9y3iu0.mongodb.net/")
-
-.then( () => console.log("Connected to MongoDB"))
-.then( () => {
-    app.listen(5000);
-})
-.catch( (err) => console.log( (err)));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
 
 //Register
-const Register = require("./Model/Register");
+import Register from "./Model/Register.js";
 
 app.post("/register", async(req, res) => {
     const {name, gmail, password} = req.body;
@@ -83,6 +88,8 @@ app.post("/upload", upload.single("image"), async(req, res) => {
     res.status(500).send({status:"error", message:err.message});
 }
 });
+
+app.listen(5000, () => console.log("Server running on port 5000"));
 
 //Display Image
 /*app.get("/getImage", async (req, res) => {

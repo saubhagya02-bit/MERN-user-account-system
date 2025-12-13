@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+
+const { Schema } = mongoose;
 
 const regiSchema = new Schema({
     name:{
@@ -16,7 +17,6 @@ const regiSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model(
-    "Register",
-    regiSchema
-)
+const Register = mongoose.model("Register", regiSchema);
+
+export default Register; 

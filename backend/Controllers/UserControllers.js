@@ -1,7 +1,7 @@
-const User = require("../Model/UserModel");
+import User from "../Model/UserModel.js";
 
 //Display
-const getAllUsers = async (req, res, next) => {
+export const  getAllUsers = async (req, res, next) => {
     let users; 
     try{
         users = await User.find();
@@ -15,7 +15,7 @@ const getAllUsers = async (req, res, next) => {
 };
 
 //Insert
-const addUsers = async (req, res, next) => {
+export const addUsers = async (req, res, next) => {
     const {name, gmail, age, address} = req.body;
     let users;
     try{
@@ -33,7 +33,7 @@ const addUsers = async (req, res, next) => {
 };
 
 //Get ID
-const getById = async (req, res, next) => {
+export const getById = async (req, res, next) => {
     const id = req.params.id;
     let user;
     try {
@@ -49,7 +49,7 @@ const getById = async (req, res, next) => {
 }
 
 //Update 
-const updateUser = async (req, res, next) => {
+export const updateUser = async (req, res, next) => {
     const id = req.params.id;
     const {name, gmail, age, address} = req.body;
     let users;
@@ -69,7 +69,7 @@ const updateUser = async (req, res, next) => {
 };
 
 //Delete
-const deleteUser = async (req, res, next) => {
+export const deleteUser = async (req, res, next) => {
     const id = req.params.id;
     let user;
 
@@ -83,9 +83,3 @@ const deleteUser = async (req, res, next) => {
     }
     return res.status(200).json({user});
 };
-
-exports.getAllUsers = getAllUsers;
-exports.addUsers = addUsers;
-exports.getById = getById;
-exports.updateUser = updateUser;
-exports.deleteUser = deleteUser;
